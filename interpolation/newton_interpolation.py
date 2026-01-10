@@ -55,3 +55,34 @@ def interpolazione_newton(x, y, xi_target):
         print(f"Stima all'Ordine {ordine}: {yint:.12f} (Errore stimato: {ea:.4e})")
 
     return yint
+
+# --- MAIN DI ESEMPIO ---
+if __name__ == "__main__":
+    # 1. DEFINIZIONE DELLA FUNZIONE
+    def funzione(x):
+        return np.log(x)
+
+    # 2. DEFINIAMO SOLO I NODI X (I PUNTI DI CAMPIONAMENTO)
+    x_dati = [1, 4, 6]
+
+    # 3. CALCOLIAMO LE Y DINAMICAMENTE CHIAMANDO LA FUNZIONE
+    #    Questo garantisce la massima precisione float
+    y_dati = [funzione(x) for x in x_dati]
+
+    # Punto in cui vogliamo interpolare
+    target = 2
+
+    print(f"Calcolo interpolazione per x = {target}")
+    print(f"Nodi X utilizzati: {x_dati}")
+    print(f"Valori Y calcolati: {[round(y, 6) for y in y_dati]}")  # Stampa arrotondata per leggibilità
+    print("-" * 50)
+
+    risultato = interpolazione_newton(x_dati, y_dati, target)
+
+    # Calcolo dell'errore vero
+    valore_vero = funzione(target)
+    errore_assoluto = abs(risultato - valore_vero)
+
+    print(f"Risultato Interpolato: {risultato:.5f}")
+    print(f"Valore Vero (ln({target})): {valore_vero:.5f}")
+    print(f"Errore Assoluto: {errore_assoluto:.5e}")

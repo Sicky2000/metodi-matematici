@@ -101,3 +101,26 @@ def disegna_grafico(x, y, a1, a0, r2):
 
     # Visualizza il grafico finale
     plt.show()
+
+# --- MAIN DI ESEMPIO ---
+if __name__ == "__main__":
+    # Dati di input
+    x_val = [1, 2, 3, 4, 5, 6, 7]
+    y_val = [0.5, 2.5, 2.0, 4.0, 3.5, 6.0, 5.5]
+
+    try:
+        # Calcolo numerico
+        slope, intercept, std_err, r_sq = lin_reg(x_val, y_val)
+
+        # Stampa risultati testuali
+        print(f"--- Risultati Numerici ---")
+        print(f"Equazione: y = {slope:.4f}x + {intercept:.4f}")
+        print(f"R^2: {r_sq:.4f}")
+        print(f"Errore Std: {std_err:.4f}")
+        print("Sto generando il grafico...")
+
+        # Visualizzazione grafica
+        disegna_grafico(x_val, y_val, slope, intercept, r_sq)
+
+    except ValueError as e:
+        print(f"Errore: {e}")

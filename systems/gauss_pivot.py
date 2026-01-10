@@ -124,3 +124,25 @@ def gauss_pivot(matrice_in, b_in, tol=1e-6):
     else:
         print("Errore: Il sistema è singolare (ea = -1.0).")
         return None
+
+# --- MAIN DI ESEMPIO ---
+if __name__ == "__main__":
+    # SISTEMA
+    # 3x - 0.1y - 0.2z = 7.85
+    # 0.1x + 7y - 0.3z = -19.3
+    # 0.3x - 0.2y + 10z = 71.4
+
+    A_input = [
+        [3.0, -0.1, -0.2],
+        [0.1, 7.0, -0.3],
+        [0.3, -0.2, 10.0]
+    ]
+
+    b_input = [7.85, -19.3, 71.4]
+
+    print("--- Inizio Calcolo ---")
+    risultato = gauss_pivot(A_input, b_input)
+
+    if risultato is not None:
+        print("\nIl vettore soluzione x è:")
+        print(risultato)

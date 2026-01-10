@@ -53,3 +53,15 @@ def secant(func, x0, x1, tol, max_iter):
         f1 = func(xr) # Calcolo f(x(i)) per il prossimo ciclo
 
     return xr, i
+
+# --- MAIN DI ESEMPIO ---
+if __name__ == "__main__":
+    # DEFINIAMO LA FUNZIONE: f(x) = x^2 - 2
+    def f_test(x):
+        return x**2 - 2
+
+    # Stimiamo valori compresi tra 0 e 10 (abbastanza lontani per testare la stabilità del metodo)
+    root, iterations = secant(f_test, 0, 10, 1e-6, 100)
+
+    if root is not None:
+        print(f"Valore: {root:.8f}")

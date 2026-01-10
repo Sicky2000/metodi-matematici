@@ -65,3 +65,53 @@ def gseid(a, b, n, x, max_iter, tol, lam):
             break
 
     return x, iter_count
+
+# --- MAIN DI ESEMPIO
+
+if __name__ == "__main__":
+    # SISTEMA
+    # 4x - y      = 2
+    # -x + 4y - z = 6
+    #      -y + 4z = 2
+    # Soluzione attesa: x=1, y=2, z=1
+
+    # 1. DEFINIZIONE MATRICE A (COEFFICIENTI)
+    # Nota: Usiamo float (es. 4.0) per evitare divisioni intere accidentali
+    a = [
+        [4.0, -1.0, 0.0],
+        [-1.0, 4.0, -1.0],
+        [0.0, -1.0, 4.0]
+    ]
+
+    # 2. DEFINIZIONE VETTORE b (TERMINI NOTI)
+    b = [2.0, 6.0, 2.0]
+
+    # 3. PARAMETRI DI CONFIGURAZIONE
+    n = 3  # Numero di equazioni
+    x = [0.0, 0.0, 0.0]  # Stima iniziale (tutto a zero)
+    max_iter = 100  # Numero massimo di iterazioni
+    tol = 0.0001  # Tolleranza errore (%)
+    lam = 1.0  # Lambda (1.0 = G-S standard, 1.1 = Sovra-rilassamento)
+
+    # Stampa dei dati di input
+    print(f"Numero equazioni: {n}")
+    print(f"Lambda (rilassamento): {lam}")
+    print(f"Tolleranza errore: {tol}%")
+    print("-" * 30)
+
+    # 4. CHIAMATA ALLA FUNZIONE
+    soluzione, iter_count = gseid(a, b, n, x, max_iter, tol, lam)
+
+    # 5. OUTPUT RISULTATI
+    print("\n--- Risultati finali ---")
+    if iter_count >= max_iter:
+        print("ATTENZIONE: Il metodo NON ha raggiunto la convergenza nel numero massimo di iterazioni.")
+    else:
+        print("Convergenza raggiunta!")
+
+    print(f"Iterazioni impiegate: {iter_count}")
+
+    # Formattiamo la stampa del vettore soluzione per renderlo leggibile
+    print("Vettore soluzione x:")
+    for i, val in enumerate(soluzione):
+        print(f"  x[{i}] = {val:.6f}")

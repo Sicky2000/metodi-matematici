@@ -5,7 +5,7 @@
 """
 
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 def broyden(func, x0, tol, max_iter, b0=None):
     """
@@ -80,3 +80,53 @@ def broyden(func, x0, tol, max_iter, b0=None):
         print("Broyden terminato: Numero massimo di iterazioni raggiunto senza convergenza.")
 
     return zero, res, i, np.array(difv)
+
+# --- MAIN DI ESEMPIO ---
+def sistema_test(x):
+    """
+    Sistema non lineare di prova:
+    1) x^2 + y^2 - 4 = 0 (Circonferenza raggio 2)
+    2) x * y - 1 = 0 (Iperbole)
+    """
+    f1 = x[0] ** 2 + x[1] ** 2 - 4
+    f2 = x[0] * x[1] - 1
+    return [f1, f2]
+
+
+if __name__ == "__main__":
+    # 1. PARAMETRI DI INPUT
+    x0 = [1.5, 0.5]  # Punto iniziale vicino alla soluzione
+    tol = 1e-8  # Tolleranza richiesta
+    kmax = 50  # Numero massimo iterazioni
+
+    print("--- Inizio Test Metodo di Broyden ---")
+    print(f"Punto iniziale: {x0}")
+
+    # 2. CHIAMATA ALLA FUNZIONE
+    # Nota: b0 è opzionale, quindi non lo passo (userà l'Identità)
+    soluzione, residuo, it, storia_diff = broyden(sistema_test, x0, tol, kmax)
+
+    # 3. STAMPA DEI RISULTATI
+    print("\n--- Risultati ---")
+    print(f"Soluzione trovata (x):  {soluzione}")
+    print(f"Residuo finale ||f(x)||: {residuo:.2e}")
+    print(f"Iterazioni eseguite:    {it}")
+
+    # Verifica matematica rapida
+    verifica = sistema_test(soluzione)
+    print(f"Verifica (sostituendo x nel sistema): {verifica}")
+
+    # 4. GRAFICO DELLA CONVERGENZA (ANALISI DI DIFV)
+    if len(storia_diff) > 0:
+        plt.figure(figsize=(8, 5))
+
+        # Grafico semilogaritmico (asse Y logaritmico)
+        plt.semilogy(range(1, it + 1), storia_diff, 'o-', linewidth=2, color='blue')
+
+        plt.title('Convergenza Metodo di Broyden')
+        plt.xlabel('Iterazione (k)')
+        plt.ylabel('Norma del passo $||x_{k+1} - x_k||$')
+        plt.grid(True, which="both", ls="-", alpha=0.5)
+        plt.show()
+    else:
+        print("Nessuna iterazione da mostrare nel grafico.")

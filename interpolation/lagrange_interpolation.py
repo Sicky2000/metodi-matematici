@@ -4,6 +4,8 @@
     Descrizione: Programma per il Metodo di Interpolazione di Lagrange
 """
 
+import numpy as np
+
 def interpolazione_lagrange(x_nodi, y_nodi, x_target):
     """
     x_nodi: Array dei punti x conosciuti (nodi)
@@ -40,4 +42,36 @@ def interpolazione_lagrange(x_nodi, y_nodi, x_target):
 
     return risultato_interpolazione
 
+# --- MAIN DI ESEMPIO ---
+if __name__ == "__main__":
+    # 1. DEFINIZIONE DELLA FUNZIONE
+    def funzione(x):
+        return np.sin(x)
 
+    # 2. DEFINIAMO I NODI X A PIACERE
+    # Usiamo 0, pi/2 e pi per interpolare il seno
+    x_dati = [0.0, 1.5, 3.0]
+
+    # 3. CALCOLIAMO I NODI Y AUTOMATICAMENTE USANDO LA FUNZIONE DEFINITA SOPRA
+    y_dati = [funzione(x) for x in x_dati]
+
+    # 4. DEFINIAMO IL PUNTO DOVE VOGLIAMO LA STIMA
+    punto_da_stimare = 1.0  # Vogliamo sapere quanto vale sin(1.0) interpolando
+
+    print(f"Nodi X scelti: {x_dati}")
+    print(f"Nodi Y calcolati (dalla funzione reale): {[round(y, 4) for y in y_dati]}")
+
+    # 5. ESEGUIAMO L'INTERPOLAZIONE
+    valore_interpolato = interpolazione_lagrange(x_dati, y_dati, punto_da_stimare)
+
+    # 6. CALCOLIAMO IL VALORE VERO PER CONFRONTO
+    valore_vero = funzione(punto_da_stimare)
+
+    # 7. CALCOLO DELL'ERRORE ASSOLUTO
+    errore_assoluto = abs(valore_vero - valore_interpolato)
+
+    print("-" * 60)
+    print(f"Risultato Lagrange (stima) : {valore_interpolato:.8f}")
+    print(f"Risultato Esatto (f(x))    : {valore_vero:.8f}")
+    print(f"Errore Assoluto            : {errore_assoluto:.8e}")
+    print("-" * 60)

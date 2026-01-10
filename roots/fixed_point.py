@@ -39,3 +39,17 @@ def fixed_point(func, x0, tol, max_iter):
             break
 
     return xr, i
+
+# --- MAIN DI ESEMPIO ---
+if __name__ == "__main__":
+    # 1. DEFINIAMO LA FUNZIONE
+    def funzione(x):
+        return (x + 2) ** (1 / 3)
+
+    # 2. PARAMETRI
+    x0 = 1.5  # Stima iniziale (tra i precedenti estremi 1 e 2)
+    tol = 0.001  # Tolleranza
+    max_iter = 20  # Interazioni massime
+
+    root, iter_count = fixed_point(funzione, x0, tol, max_iter)
+    print(f"Valore: {root:.6f} trovato in {iter_count} iterazioni")

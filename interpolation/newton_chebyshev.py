@@ -70,3 +70,31 @@ def calcola_nodi_chebyshev(a, b, n):
     x_k = (a + b) / 2 + (b - a) / 2 * t_k
 
     return x_k
+
+
+# --- MAIN DI ESEMPIO ---
+# 1. DEFINIAMO LA FUNZIONE DA INTERPOLARE
+def funzione(x):
+    return 1 / (1 + 25 * x ** 2)
+
+if __name__ == "__main__":
+    # 2. PARAMETRI
+    a, b = -1, 1  # Intervallo
+    n_nodi = 10  # Numero di nodi (grado polinomio = n-1)
+    xi_target = 0.5  # Punto dove vogliamo stimare il valore (Test singolo)
+
+    # 3. GENERAZIONE DEI DATI USANDO CHEBYSHEV
+    x_cheb = calcola_nodi_chebyshev(a, b, n_nodi)
+    y_cheb = funzione(x_cheb)
+
+    print(f"Nodi di Chebyshev calcolati: \n{np.round(x_cheb, 4)}\n")
+
+    # 4. ESECUZIONE INTERPOLAZIONE NEL PUNTO XI_TARGET
+    print(f"--- Interpolazione nel punto x = {xi_target} ---")
+    valore_stimato = newton_chebyshev(x_cheb, y_cheb, xi_target)
+    valore_vero = funzione(xi_target)
+
+    print("-" * 50)
+    print(f"Risultato Interpolazione: {valore_stimato:.6f}")
+    print(f"Valore Reale (Runge):     {valore_vero:.6f}")
+    print(f"Errore Assoluto:          {abs(valore_stimato - valore_vero):.6e}")

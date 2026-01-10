@@ -48,3 +48,21 @@ def newton(func, dfunc, x0, tol, max_iter):
             break
 
     return xr, i
+
+# --- MAIN DI ESEMPIO ---
+if __name__ == "__main__":
+    # 1. DEFINIAMO LA FUNZIONE: x^2 - 4
+    def funzione(x):
+        return x ** 2 - 4
+
+    # 2. DEFINIAMO LA DERIVATA DELLA FUNZIONE: 2x
+    def derivata(x):
+        return 2 * x
+
+    result = newton(funzione, derivata, x0=6.0, tol=1e-6, max_iter=100)
+
+    if result:
+        root, iterations = result
+        print(f"Valore: {root:.6f}")
+    else:
+        print("Soluzione non trovata (Derivata uguale a zero)")

@@ -54,3 +54,34 @@ def bisect(func, xl, xu, tol, max_iter):
             break
 
     return xr, i
+
+# --- MAIN DI ESEMPIO ---
+if __name__ == "__main__":
+    # 1. DEFINIAMO LA FUNZIONE
+    def funzione(x):
+        return x ** 3 - x - 2
+
+    # 2. DEFINIZIONE DEI PARAMETRI
+    x_lower = 1.0        # Estremo inferiore
+    x_upper = 2.0        # Estremo superiore
+    tolleranza = 1e-5    # Tolleranza desiderata (0.00001)
+    max_iterazioni = 100 # Limite iterazioni
+
+    print(f"Intervallo: [{x_lower}, {x_upper}]")
+    print(f"Tolleranza: {tolleranza}")
+    print(f"Funzione: x^3 - x - 2\n")
+
+    # 3. CHIAMATA ALLA FUNZIONE BISECT
+    radice, iterazioni = bisect(funzione, x_lower, x_upper, tolleranza, max_iterazioni)
+
+    # 4. OUTPUT DEI RISULTATI
+    if radice is not None:
+        print("-" * 30)
+        print(f"Risultato finale:")
+        # Formattazione a 6 cifre decimali
+        print(f"Radice stimata (xr): {radice:.6f}")
+        print(f"Iterazioni totali:   {iterazioni}")
+        print(f"Valore di f(xr):     {funzione(radice):.2e}") # Verifica quanto siamo vicini a 0
+        print("-" * 30)
+    else:
+        print("\nImpossibile trovare la radice: intervallo non valido.")

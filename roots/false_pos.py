@@ -73,3 +73,12 @@ def false_pos(func, xl, xu, tol, max_iter):
             break
 
     return xr, i
+
+# --- MAIN DI ESEMPIO ---
+if __name__ == "__main__":
+    # DEFINIZAMO LA FUNZIONE
+    def funzione(x):
+        return x**3 - x - 2
+
+    root, iterations = false_pos(funzione, 1, 2, 0.001, 20)
+    print(f"Valore: {root:.6f} trovato in {iterations} iterazioni")

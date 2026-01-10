@@ -44,3 +44,38 @@ def risolvi_tridiagonale(e, f, g, r):
         x[k] = (rr[k] - g[k] * x[k + 1]) / ff[k]
 
     return x
+
+# --- MAIN DI ESEMPIO ---
+if __name__ == "__main__":
+    # 1. DEFINIZIONE DEI DATI
+    # Sistema:
+    # [ 2 -1  0  0 ]
+    # [-1  2 -1  0 ]
+    # [ 0 -1  2 -1 ]
+    # [ 0  0 -1  2 ]
+
+    n = 4
+
+    # Diagonale principale (f)
+    f_in = np.array([2.0, 2.0, 2.0, 2.0])
+
+    # Diagonale inferiore (e) - il primo elemento è ignorato (0.0)
+    e_in = np.array([0.0, -1.0, -1.0, -1.0])
+
+    # Diagonale superiore (g) - l'ultimo elemento è ignorato (0.0)
+    g_in = np.array([-1.0, -1.0, -1.0, 0.0])
+
+    # Termini noti (r)
+    # Se la soluzione attesa è [1, 1, 1, 1], allora r deve essere [1, 0, 0, 1]
+    r_in = np.array([1.0, 0.0, 0.0, 1.0])
+
+    print(f"Dimensione sistema: {n}x{n}")
+    print(f"Termini noti: {r_in}")
+
+    # 2. CHIAMATA ALLA FUNZIONE
+    soluzione = risolvi_tridiagonale(e_in, f_in, g_in, r_in)
+
+    # 3. STAMPA DEI RISULTATI
+    print("\nRisultato calcolato (x):")
+    for i, val in enumerate(soluzione):
+        print(f"x[{i + 1}] = {val:.4f}")
