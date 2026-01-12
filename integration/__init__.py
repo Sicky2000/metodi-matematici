@@ -1,1 +1,2 @@
-from .trapezoidal import trap_rule
+from .trapezoidal import trapezoidal
+from .simpson import simpson

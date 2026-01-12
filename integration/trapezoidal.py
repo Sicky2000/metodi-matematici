@@ -7,10 +7,9 @@ che la formula composta per intervalli multipli.
 
 Autore:      Sicky2005
 Corso:       Metodi Numerici per l'Ingegneria
-Descrizione: Programma per il Metodo dei Trapezi
 """
 
-def trap_rule(f, a, b, n):
+def trapezoidal(f, a, b, n):
     """
     Calcola l'integrale definito usando la regola del Trapezio composta.
 
