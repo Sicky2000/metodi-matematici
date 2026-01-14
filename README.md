@@ -2,13 +2,13 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-Una libreria Python completa, modulare ed efficiente che implementa i principali algoritmi numerici per la risoluzione di equazioni, sistemi lineari e non lineari, interpolazione e integrazione.
+Una libreria Python completa, modulare ed efficiente che implementa i principali algoritmi numerici per la risoluzione di equazioni, sistemi lineari e non lineari, interpolazione, integrazione ed equazioni differenziali.
 
 Sviluppato come progetto per il corso di **Metodi Numerici per l'Ingegneria**.
 
 ## 🚀 Caratteristiche
 
-Il progetto è stato rifattorizzato in pacchetti logici per facilitare l'utilizzo e la manutenzione. Fa ampio uso di **NumPy** per garantire efficienza e vettorializzazione dei calcoli, sostituendo i classici cicli lenti di Python dove possibile.
+Il progetto è stato rifattorizzato in pacchetti logici per facilitare l'utilizzo e la manutenzione. Fa ampio uso di **NumPy** per garantire efficienza e vettorializzazione dei calcoli, sostituendo i classici cicli lenti di Python dove possibile, specialmente nella risoluzione dei sistemi di ODE.
 
 ### 📦 Moduli Disponibili
 
@@ -44,6 +44,18 @@ Calcolo di integrali definiti.
 - Regola dei Trapezi composta (`trapezoidal`)
 - **Regola di Simpson Mista** (`simpson`): Algoritmo intelligente che combina Simpson 1/3 (per intervalli pari) e Simpson 3/8 (per gestire intervalli dispari) mantenendo un ordine di accuratezza $O(h^4)$.
 
+#### 5. `ode` (Equazioni Differenziali Ordinarie)
+Risoluzione di problemi ai valori iniziali (IVP) $y' = f(x, y)$.
+Il solver **RK4** è implementato per gestire automaticamente sia **singole ODE** che **Sistemi di ODE** sfruttando la vettorializzazione di NumPy.
+- **1° Ordine:**
+  - Metodo di Eulero (`euler`)
+- **2° Ordine (RK2):**
+  - Heun Semplice (`heun`) e Iterativo (`heun_iterative`)
+  - Punto Medio (`midpoint`)
+  - Ralston (`ralston`)
+- **4° Ordine:**
+  - Runge-Kutta 4 (`rk4`) - Standard de facto per alta precisione.
+
 ---
 
 ## 🛠️ Installazione e Requisiti
@@ -52,7 +64,7 @@ Assicurati di avere Python installato. Le dipendenze principali sono **NumPy** e
 
 ~~~bash
 # Clona la repository
-git clone https://github.com/tuo-username/metodi-numerici.git
+git clone [https://github.com/tuo-username/metodi-numerici.git](https://github.com/tuo-username/metodi-numerici.git)
 cd metodi-numerici
 
 # Installa le dipendenze
@@ -80,18 +92,30 @@ radice = newton_raphson(f, df, x0=1.5)
 print(f"Radice trovata: {radice:.6f}")
 ~~~
 
-### 2. Integrazione Numerica (Simpson Misto)
+### 2. Risoluzione Sistema di ODE (Preda-Predatore)
+Il modulo `ode` rileva automaticamente se l'input `y0` è un vettore e risolve il sistema.
+
 ~~~python
 import numpy as np
-from integration import simpson
+import matplotlib.pyplot as plt
+from ode import rk4
 
-def g(x):
-    return np.sin(x)
+# Definizione del sistema Lotka-Volterra
+# y[0] = Prede, y[1] = Predatori
+def lotka_volterra(t, y):
+    alpha, beta, delta, gamma = 1.1, 0.4, 0.1, 0.4
+    dprede = alpha * y[0] - beta * y[0] * y[1]
+    dpredatori = delta * y[0] * y[1] - gamma * y[1]
+    return np.array([dprede, dpredatori])
 
-# Calcola l'integrale di sin(x) da 0 a pi greco
-# Nota: Simpson gestisce automaticamente intervalli pari e dispari
-area = simpson(g, a=0, b=np.pi, n=11)
-print(f"Area calcolata: {area:.6f}")
+# Condizioni iniziali: 10 prede, 10 predatori
+t, y = rk4(lotka_volterra, x0=0, y0=[10, 10], x_end=50, h=0.1)
+
+# y è una matrice (n_passi, 2). y[:, 0] sono le prede, y[:, 1] i predatori
+plt.plot(t, y[:, 0], label='Prede')
+plt.plot(t, y[:, 1], label='Predatori')
+plt.legend()
+plt.show()
 ~~~
 
 ### 3. Interpolazione e Nodi di Chebyshev
@@ -122,6 +146,9 @@ metodi-numerici/
 ├── interpolation/        # Metodi di interpolazione
 │   ├── __init__.py
 │   └── polynomial.py
+├── ode/                  # Equazioni Differenziali (Eulero, Heun, RK4)
+│   ├── __init__.py
+│   └── solvers.py
 ├── roots/                # Ricerca zeri
 │   ├── __init__.py
 │   ├── bracketing.py
