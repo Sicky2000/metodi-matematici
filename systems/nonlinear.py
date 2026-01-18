@@ -7,6 +7,53 @@ Corso:       Metodi Numerici per l'Ingegneria
 
 import numpy as np
 
+import numpy as np
+
+
+def newton_system(F, J, x0, tol=1e-6, max_iter=50):
+    """
+    Metodo di Newton-Raphson per sistemi di equazioni non lineari.
+    Risolve J(x) * delta = -F(x)
+
+    Args:
+        F (callable): Funzione che accetta un vettore x e restituisce un vettore F(x).
+        J (callable): Funzione che accetta un vettore x e restituisce la matrice Jacobiana J(x).
+        x0 (list/array): Vettore delle stime iniziali.
+        tol (float): Tolleranza per l'arresto (norma dell'errore).
+        max_iter (int): Numero massimo di iterazioni.
+
+    Returns:
+        numpy.ndarray: Il vettore soluzione x.
+    Raises:
+        ValueError: Se la matrice Jacobiana è singolare o il metodo non converge.
+    """
+    x = np.array(x0, dtype=float)
+
+    for k in range(max_iter):
+        # 1. Valutiamo le funzioni e lo Jacobiano nel punto corrente
+        Fx = np.array(F(x))
+        Jx = np.array(J(x))
+
+        # 2. Controllo convergenza (Norma del residuo)
+        if np.linalg.norm(Fx) < tol:
+            return x
+
+        # 3. Risolviamo il sistema lineare J * delta = -F
+        try:
+            delta = np.linalg.solve(Jx, -Fx)
+        except np.linalg.LinAlgError:
+            raise ValueError("La matrice Jacobiana è singolare (determinante 0). Il metodo fallisce.")
+
+        # 4. Aggiorniamo la soluzione
+        x = x + delta
+
+        # 5. Controllo convergenza sullo step
+        if np.linalg.norm(delta) < tol:
+            return x
+
+    print("Attenzione: Numero massimo di iterazioni raggiunto.")
+    return x
+
 def broyden(f, x0, tol=1e-6, max_iter=100, B0=None):
     """
     Risolve un sistema di equazioni non lineari f(x) = 0 usando il metodo di Broyden.

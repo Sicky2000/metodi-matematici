@@ -31,6 +31,7 @@ Risolutori per sistemi lineari $Ax = b$ e non lineari.
   - Jacobi (`jacobi`)
   - Gauss-Seidel con Rilassamento SOR (`gauss_seidel`)
 - **Sistemi Non Lineari:**
+  - Metodo di Newton-Raphson (`newton_system`): Convergenza quadratica, richiede la matrice Jacobiana.
   - Metodo di Broyden (`broyden`) - Metodo Quasi-Newton
 
 #### 3. `interpolation` (Interpolazione)
@@ -129,6 +130,31 @@ y_nodes = [val**2 for val in x_nodes] # Esempio y = x^2
 target = 2.5
 stima = newton(x_nodes, y_nodes, target)
 print(f"Valore interpolato in x={target}: {stima:.4f}")
+~~~
+
+### 4. Sistemi Non Lineari (Newton-Raphson)
+~~~python
+from systems import newton_system
+
+# Sistema da risolvere:
+# f1: x^2 + y^2 - 4 = 0 (Cerchio raggio 2)
+# f2: x^2 - y^2 - 1 = 0 (Iperbole)
+
+def equations(p):
+    x, y = p
+    return [x**2 + y**2 - 4, x**2 - y**2 - 1]
+
+def jacobian(p):
+    x, y = p
+    # Matrice delle derivate parziali
+    # [df1/dx, df1/dy]
+    # [df2/dx, df2/dy]
+    return [[2*x, 2*y],
+            [2*x, -2*y]]
+
+# Risoluzione partendo da una stima iniziale [1.5, 1.5]
+sol = newton_system(equations, jacobian, x0=[1.5, 1.5])
+print(f"Soluzione: {sol}")
 ~~~
 
 ---
