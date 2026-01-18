@@ -6,11 +6,11 @@ Una libreria Python completa, modulare ed efficiente che implementa i principali
 
 Sviluppato come progetto per il corso di **Metodi Numerici per l'Ingegneria**.
 
-## 🚀 Caratteristiche
+## Caratteristiche
 
 Il progetto è stato rifattorizzato in pacchetti logici per facilitare l'utilizzo e la manutenzione. Fa ampio uso di **NumPy** per garantire efficienza e vettorializzazione dei calcoli, sostituendo i classici cicli lenti di Python dove possibile, specialmente nella risoluzione dei sistemi di ODE.
 
-### 📦 Moduli Disponibili
+### Moduli Disponibili
 
 #### 1. `roots` (Ricerca di Radici)
 Metodi per trovare gli zeri di funzioni non lineari $f(x) = 0$.
@@ -58,7 +58,7 @@ Il solver **RK4** è implementato per gestire automaticamente sia **singole ODE*
 
 ---
 
-## 🛠️ Installazione e Requisiti
+## Installazione e Requisiti
 
 Assicurati di avere Python installato. Le dipendenze principali sono **NumPy** e **Matplotlib**.
 
@@ -73,7 +73,7 @@ pip install -r requirements.txt
 
 ---
 
-## 💻 Esempio di Utilizzo
+## Esempio di Utilizzo
 
 Ecco come utilizzare i moduli della libreria nei tuoi script. Grazie alla struttura a pacchetti, l'importazione è semplice e intuitiva.
 
@@ -133,7 +133,7 @@ print(f"Valore interpolato in x={target}: {stima:.4f}")
 
 ---
 
-## 📂 Struttura del Progetto
+## Struttura del Progetto
 
 Il repository è organizzato come segue:
 
@@ -165,12 +165,12 @@ metodi-numerici/
 
 ---
 
-## ✍️ Autore
+## Autore
 
 **Sicky2005**:
 Studente di Ingegneria della Trasformazione Digitale.
 
-## 📄 Licenza
+## Licenza
 
 Questo progetto è distribuito sotto licenza **GPL-3.0**.
 Vedi il file [LICENSE](LICENSE) per maggiori dettagli.
